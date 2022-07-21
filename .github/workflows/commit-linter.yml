@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: latest
+        node-version: 16
 
     steps:
       - name: Setup Checkout V3
@@ -34,6 +34,5 @@ jobs:
 
       - name: Run Commit Linter
         uses: wagoid/commitlint-github-action@v2.0.3
-        working-directory: ./
         configFile: ./commitlint.config.js
         firstParent: true
