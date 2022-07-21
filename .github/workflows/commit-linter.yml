@@ -2,10 +2,10 @@ name: Commit Linter
 
 on:
   push:
-    branches: [main, dev]
-  pull_request:
-    types: [closed]
-    branches: [main, dev]
+    branches: ["main", "dev"]
+  # pull_request:
+  # types: [closed]
+  # branches: [main, dev]
 
 jobs:
   build:
