@@ -1,17 +1,39 @@
-name: CI
+name: Commit Linter
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: [main, dev]
+  pull_request:
+    types: [closed]
+    branches: [main, dev]
 
 jobs:
   build:
+    name: Check commits
+
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: latest
+
     steps:
+      - name: Setup Checkout V3
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Commit Linter
+      - name: Setup Node.js ${{ matrix.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        working-directory: ./
+        run: npm ci
+
+      - name: Run Commit Linter
         uses: wagoid/commitlint-github-action@v2.0.3
+        working-directory: ./
+        configFile: ./commitlint.config.js
+        firstParent: true
